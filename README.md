@@ -1,23 +1,24 @@
-# Discord Bot Project
+# Zentro Discord Bot (v1.0)
 
-A simple Discord bot built with Discord.js that responds to basic commands.
+A modular, advanced Discord bot for FiveM server management, built with Discord.js.
 
-## Features
+## 🚀 Features
 
-- **!ping** - Check if the bot is responsive
-- **!hello** - Get a friendly greeting
-- **!help** - Show available commands with an embedded message
+- **Modular command system** (easy to add/extend)
+- **Interactive help**: Multi-page, themed, navigable with buttons (◀️ ▶️ ❌)
+- **Standardized embed footers** for all messages
+- **Admin/management section** for server staff (extensible)
+- **.gitignore** for security and clean repo
+- **Ready for advanced features** (moderation, resources, stats, etc.)
 
-## Setup Instructions
+## 🛠️ Setup Instructions
 
 ### 1. Prerequisites
-
 - Node.js (v16 or higher)
 - A Discord account
 - A Discord application and bot token
 
 ### 2. Discord Bot Setup
-
 1. Go to the [Discord Developer Portal](https://discord.com/developers/applications)
 2. Click "New Application" and give it a name
 3. Go to the "Bot" section in the left sidebar
@@ -27,7 +28,6 @@ A simple Discord bot built with Discord.js that responds to basic commands.
 6. Copy your bot token (you'll need this later)
 
 ### 3. Invite Bot to Server
-
 1. Go to the "OAuth2" → "URL Generator" section
 2. Select "bot" under "Scopes"
 3. Select the following permissions:
@@ -37,7 +37,6 @@ A simple Discord bot built with Discord.js that responds to basic commands.
 4. Copy the generated URL and open it in a browser to invite the bot to your server
 
 ### 4. Environment Setup
-
 1. Create a `.env` file in the project root:
    ```
    DISCORD_TOKEN=your_bot_token_here
@@ -45,54 +44,79 @@ A simple Discord bot built with Discord.js that responds to basic commands.
 2. Replace `your_bot_token_here` with your actual bot token
 
 ### 5. Install Dependencies
-
 ```bash
 npm install
 ```
 
 ### 6. Run the Bot
-
 ```bash
-node index.js
+npm start
 ```
 
-You should see: `🤖 Bot is ready! Logged in as [Your Bot Name]`
+You should see: `🤖 Zentro est en ligne! Connecté en tant que [Your Bot Name]`
 
-## Available Commands
-
-- `!ping` - Bot responds with "🏓 Pong!"
-- `!hello` - Bot greets you with "👋 Hello [username]!"
-- `!help` - Shows an embedded message with all available commands
-
-## Project Structure
-
+## 📦 Project Structure
 ```
 zentro/
-├── index.js          # Main bot file
-├── package.json      # Dependencies and scripts
-├── .env              # Environment variables (create this)
-└── README.md         # This file
+├── index.js            # Main bot file
+├── commands/           # All command modules (one file per command)
+├── utils/embedHelper.js# Utility for standardized embed footers
+├── config/             # Configuration files (e.g. FiveM server info)
+├── .env                # Environment variables (not committed)
+├── .gitignore          # Git ignore rules
+├── package.json        # Dependencies and scripts
+└── README.md           # This file
 ```
 
-## Next Steps
+## 🧩 Available Commands
 
-This is a basic Discord bot template. You can extend it by:
+- `!help` — Interactive, multi-page help (with navigation buttons)
+- `!ping` — Check bot latency
+- `!hello` — Get a friendly greeting
+- `!uptime` — Show bot and server uptime
+- `!connect` — Get FiveM server connection info (with interactive buttons)
+- `!status` — Show FiveM server status
+- `!serverinfo` — Detailed server info
+- `!players` — List connected players
+- `!findplayer <name>` — Search for a specific player
+- `!resources` — List server resources (admin/management section)
 
-1. Adding more commands
-2. Implementing slash commands
-3. Adding database integration
-4. Creating moderation features
-5. Adding music playback
-6. Implementing role management
+> **Note:** The help command now includes an **Administration Serveur** section for all current and future management commands. Only admins should use these commands.
 
-## Security Notes
+## 🖌️ Standardized Embed Footers
+All bot messages use a consistent footer format for clarity and professionalism:
+```
+Zentro Bot • [Context] • [Type] • [Page X/Y] • Version 1.0
+```
+- Context: Command or section (e.g. Help, Connect, Players)
+- Type: Info, Error, Success, etc.
+- Page: Only for multi-page embeds (like help)
+- Version: Always shown
 
+## 🧰 How to Add a New Command with Standardized Footer
+1. Create a new file in `commands/` (e.g. `mycommand.js`)
+2. Use the `EmbedHelper` utility:
+   ```js
+   const EmbedHelper = require('../utils/embedHelper');
+   // ...
+   const embed = new EmbedBuilder()
+     .setColor('#00FF00')
+     .setTitle('My Command')
+     .setDescription('...')
+     .setFooter(EmbedHelper.createFooter(EmbedHelper.contexts.MYCONTEXT, EmbedHelper.types.INFO))
+     .setTimestamp();
+   ```
+3. Register your command as usual (it will be auto-loaded)
+
+## 🔒 Security Notes
 - Never share your bot token publicly
-- Add `.env` to your `.gitignore` file
+- `.env` is ignored by git (see `.gitignore`)
 - Keep your bot token secure and regenerate it if compromised
 
-## Troubleshooting
+## 📝 Changelog
+- v1.0: Modular structure, interactive help, standardized footers, admin section, improved security
 
+## ❓ Troubleshooting
 - **Bot not responding**: Make sure the bot has the correct permissions and is online
 - **Token invalid**: Double-check your bot token in the `.env` file
 - **Missing intents**: Ensure Message Content Intent is enabled in the Discord Developer Portal 
